@@ -4,7 +4,7 @@ library(readr) # read .csv file
 library(dplyr) # use %>% function
 library(ggplot2) # Plotting graph
 library(stringr) # Changing of data format
-library(DescTools) # For better use in exploring data + more function
+library(DescTools) # For better use in exploring data and more function
 
 # Dataset
 Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
