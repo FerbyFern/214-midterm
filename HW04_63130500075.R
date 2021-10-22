@@ -45,4 +45,4 @@ scat_plot+geom_smooth() #default value - loess
 scat_plot+geom_smooth(method="lm") #linear model
 
 # 3: Histogram
-starwars %>% ggplot(aes(x=height))+geom_histogram(binwidth = 15)
+starwars %>% ggplot(aes(x=height)) + geom_histogram(binwidth = 15)
