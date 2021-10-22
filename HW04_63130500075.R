@@ -13,6 +13,7 @@ View(Books)
 # Explore dataset
 glimpse(Books)
 
+------------------------------------------------------------
 
 # Part 2
 # Clean data column "Type" cleaned the word "Box set"
@@ -55,6 +56,7 @@ Books %>% summarise(Books)
 # factor()
 as.factor(Books$Price)
 
+------------------------------------------------------------
 
 # Part 3
 # What are the top 3 books with the highest ratings?
@@ -73,6 +75,7 @@ Books %>% select(Book_title,Type,Price) %>% filter(Type == "Unknown Binding")
 # What types of books are there and How many books are there in each type of book?
 Books %>% group_by(Type) %>% count()
 
+------------------------------------------------------------
 
 # Part 4
 # 1: Bar Chart
