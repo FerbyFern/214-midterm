@@ -1,9 +1,9 @@
 # Part 1
 # Library
-library(readr) # for reading csv
-library(dplyr) # for %>% uses
-library(ggplot2) # for plotting graph
-library(stringr) # in case of changing of data format
+library(readr) # read .csv file
+library(dplyr) # use %>% function
+library(ggplot2) # Plotting graph
+library(stringr) # Changing of data format
 library(DescTools) # For better use in exploring data + more function
 
 # Dataset
