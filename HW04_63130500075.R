@@ -1,48 +1,103 @@
-library(dplyr)
-library(readr)
+# Part 1
+# Library
+library(readr) # for reading csv
+library(dplyr) # for %>% uses
+library(ggplot2) # for plotting graph
+library(stringr) # in case of changing of data format
+library(DescTools) # For better use in exploring data + more function
 
-# Base R
-hist(starwars$height)
-plot(x=starwars$height, y=starwars$mass)
+# Dataset
+Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
+View(Books)
 
-# Load data
-Marvels <- read_csv("https://raw.githubusercontent.com/safesit23/INT214-Statistics/main/datasets/Marvels.csv")
+# Explore dataset
+glimpse(Books)
 
-# Set data
-count_marvel <-table(Marvels$years)
 
-count_marvel
+# Part 2
+# Clean data column "Type" cleaned the word "Box set"
+Books$Type <- Books$Type %>% str_remove("Boxed Set -") %>% str_trim()
+View(Books)
 
-# Create graph
-barplot(count_marvel)
+# Package stringr
+# str_remove
+Books$Type %>% str_remove("Boxed Set -")
+# str_count
+str_count(Books$Description, "[aeiou]")
 
-barplot(count_marvel,
-        main = "Number of Released Marvel Movies",   # Title of graphs
-        xlab = "Year Released",       # X-Axis Title
-        ylab = "Number of Movies",    # Y-Axis Title
-)
+# Package readr
+# read_csv
+Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
+# cols_condense()
+cols_condense(Books)
 
-library(ggplot2)
-## Marvel Dataset - Bar Chart
-#Step 1
-ggplot(Marvels,aes(x=years)) + geom_bar()
-#Step 2-1: Save to object
-marvel_plot <- ggplot(Marvels,aes(x=years)) + geom_bar()
-#Step 2-2: Adding component
-marvel_plot + ggtitle("Number of Released Marvel Movies") +
-  xlab("Year Released") + ylab("Number of Movies")
+# Package dplyr
+# select()
+Books %>% select(Rating,Book_title,Price)
+# glimpse()
+glimpse(Books)
+# count()
+Books %>% count()
+Books %>% count(Type == "ebook")
+# filter()
+Books %>% filter(Number_Of_Pages <= 200)
+# arrange()
+Books %>% arrange(Price) #
+Books %>% arrange(desc(Rating)) #
+# group_by()
+Books %>% group_by(Type)
+# tally()
+Books %>% group_by(Type) %>% tally(sort = TRUE)
+# distinct()
+Books %>% select(Type) %>% distinct()
+# summarise()
+Books %>% summarise(Books)
+# factor()
+as.factor(Books$Price)
 
-#2-2: Example 2: Scatter Plot
-starwars %>% filter(mass>1000)
 
-starwars %>% ggplot(aes(x=height,y=mass))+geom_point()
+# Part 3
+# What are the top 3 books with the highest ratings?
+Books %>% select(Book_title,Rating) %>% arrange(desc(Rating)) %>% head(n = 3L)
+# What are some books that price less than 200 ?
+Books %>% select(Book_title,Number_Of_Pages) %>% filter(Number_Of_Pages < 200)
+# What books are not reviewed at all and how many?
+Books %>% select(Book_title,Reviews) %>% filter(Reviews == 0)
+# How many books are reviewed in all 270 books?
+SumReviews <- Books %>% count(Reviews)
+sum(SumReviews)
+# How many e-books are there?
+Books %>% filter(Type == "ebook") %>% group_by(Type) %>% tally(sort = TRUE)
+# Which book doesn't know the type of book and how much per book?
+Books %>% select(Book_title,Type,Price) %>% filter(Type == "Unknown Binding")
+# What types of books are there and How many books are there in each type of book?
+Books %>% group_by(Type) %>% count()
 
-scat_plot <- starwars %>% filter(mass<500) %>% ggplot(aes(x=height,y=mass))+
-  geom_point(aes(color=gender))
-scat_plot
 
-scat_plot+geom_smooth() #default value - loess
-scat_plot+geom_smooth(method="lm") #linear model
+# Part 4
+# 1: Bar Chart
+# Graph show type of book
+# Step1
+ggplot(Books,aes(x = Type)) + geom_bar()
 
-# 3: Histogram
-starwars %>% ggplot(aes(x=height)) + geom_histogram(binwidth = 15)
+# Step2-1: Save to object
+type_plot <- ggplot(Books,aes(x = Type)) + geom_bar()
+
+# Step2-2: Adding component
+type_plot + ggtitle("Type of Book") + xlab("Types") + ylab("Number of Books")
+type_plot
+
+
+# 2: Scatter Plot
+# Graph show relation between price and rating
+Books %>% filter(Price < 250)
+
+Books %>% ggplot(aes(x = Rating,y = Price)) + geom_point()
+
+Books %>% filter(Price < 250) %>% ggplot(aes(x = Rating,y = Price)) + geom_point()
+
+ratingPrice_plot <- Books %>% filter(Price < 250) %>% ggplot(aes(x = Rating,y = Price)) + geom_point(aes(color=Type)) + ggtitle("Relation Between Price and Rating")
+ratingPrice_plot
+
+ratingPrice_plot + geom_smooth() # default value - loess
+ratingPrice_plot + geom_smooth(method="lm") # linear model
