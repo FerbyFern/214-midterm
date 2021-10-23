@@ -74,6 +74,10 @@ Books %>% filter(Type == "ebook") %>% group_by(Type) %>% tally(sort = TRUE)
 Books %>% select(Book_title,Type,Price) %>% filter(Type == "Unknown Binding")
 # What types of books are there and How many books are there in each type of book?
 Books %>% group_by(Type) %>% count()
+# What is the average price for each type of book?
+Books %>% group_by(Type) %>% select(Price) %>% summarise(avg = mean(Price, na.rm = TRUE)) 
+# Which book and in what genre has a rating of more than 4.50?
+Books %>% select(Rating,Book_title,Type) %>% filter(Rating > 4.50)
 
 ------------------------------------------------------------
 
