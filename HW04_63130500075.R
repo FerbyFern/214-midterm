@@ -4,6 +4,7 @@ library(readr) # read .csv file
 library(dplyr) # use %>% function
 library(ggplot2) # Plotting graph
 library(stringr) # Changing of data format
+library(forcats) # Provide a suite of tools that solve common
 library(DescTools) # For better use in exploring data and more function
 
 # Dataset
@@ -13,13 +14,13 @@ View(Books)
 # Explore dataset
 glimpse(Books)
 
-------------------------------------------------------------
-
-# Part 2
 # Clean data column "Type" cleaned the word "Box set"
 Books$Type <- Books$Type %>% str_remove("Boxed Set -") %>% str_trim()
 View(Books)
 
+------------------------------------------------------------
+
+# Part 2
 # Package stringr
 # str_remove
 Books$Type %>% str_remove("Boxed Set -")
@@ -31,6 +32,10 @@ str_count(Books$Description, "[aeiou]")
 Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
 # cols_condense()
 cols_condense(Books)
+
+# Package forcats
+# as_factor()
+as.factor(Books$Price)
 
 # Package dplyr
 # select()
@@ -45,16 +50,20 @@ Books %>% filter(Number_Of_Pages <= 200)
 # arrange()
 Books %>% arrange(Price) #
 Books %>% arrange(desc(Rating)) #
-# group_by()
-Books %>% group_by(Type)
-# tally()
-Books %>% group_by(Type) %>% tally(sort = TRUE)
 # distinct()
 Books %>% select(Type) %>% distinct()
 # summarise()
 Books %>% summarise(Books)
-# factor()
-as.factor(Books$Price)
+# group_by()
+Books %>% group_by(Type)
+# tally()
+Books %>% group_by(Type) %>% tally(sort = TRUE)
+# group_size()
+group_size(Books)
+
+# Package ggplot2
+# coord_flip()
+ggplot(Books,aes(x = Type)) + geom_bar() + coord_flip()
 
 ------------------------------------------------------------
 
@@ -84,13 +93,10 @@ Books %>% select(Rating,Book_title,Type) %>% filter(Rating > 4.50)
 # Part 4
 # 1: Bar Chart
 # Graph show type of book
-# Step1
 ggplot(Books,aes(x = Type)) + geom_bar()
 
-# Step2-1: Save to object
-type_plot <- ggplot(Books,aes(x = Type)) + geom_bar()
+type_plot <- ggplot(Books,aes(x = Type)) + geom_bar() + coord_flip()
 
-# Step2-2: Adding component
 type_plot + ggtitle("Type of Book") + xlab("Types") + ylab("Number of Books")
 type_plot
 
