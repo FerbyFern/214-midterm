@@ -1,11 +1,12 @@
 # Part 1
 # Library
-library(readr) # read .csv file
-library(dplyr) # use %>% function
-library(ggplot2) # Plotting graph
-library(stringr) # Changing of data format
-library(forcats) # Provide a suite of tools that solve common
-library(DescTools) # For better use in exploring data and more function
+library(readr)      # read .csv file
+library(dplyr)      # use %>% function
+library(ggplot2)    # Plotting graph
+library(stringr)    # Changing of data format
+library(forcats)    # Provide a suite of tools that solve common
+library(DescTools)  # For better use in exploring data and more function
+library(scales)     #use find percent
 
 # Dataset
 Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
@@ -93,12 +94,18 @@ Books %>% select(Rating,Book_title,Type) %>% filter(Rating > 4.50)
 ------------------------------------------------------------
 
 # Part 4
-# 1: Bar Chart
+# 1: Pie Chart
 # Graph show type of book
-ggplot(Books,aes(x = Type)) + geom_bar()
-type_plot <- ggplot(Books,aes(x = Type)) + geom_bar() + coord_flip() + 
-             ggtitle("Type of Book") + xlab("Types") + ylab("Number of Books")
-type_plot
+group_type <- data.frame(table(Books$Type))
+group_type <- group_type %>% rename("Type" = Var1,"count" = Freq)
+
+group_type %>% ggplot(aes(x = "",y = count, fill = Type)) + 
+               geom_bar(stat ="identity", width = 1, color ="white") +
+               coord_polar("y", start = 0)+
+               theme_void() +
+               geom_text(aes(label = percent(count/sum(count))),
+               position = position_stack(vjust = 0.5)) + 
+               ggtitle("Type of Book")
 
 # 2: Scatter Plot
 # Graph show relation between price and rating
@@ -115,6 +122,3 @@ ratingPrice_plot + geom_smooth(method="lm") + theme_minimal() +
 rating_plot <- Books %>% ggplot(aes(x = Number_Of_Pages)) + geom_boxplot() + 
                ggtitle("Number of Pages in the Book") + theme_light() 
 rating_plot
-
-
-
