@@ -32,9 +32,10 @@ str_count(Books$Description, "[aeiou]")
 Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
 # cols_condense()
 cols_condense(Books)
+# spec
+spec(Books)
 
 # Package forcats
-
 
 # Package dplyr
 # select()
