@@ -102,15 +102,15 @@ type_plot
 
 # 2: Scatter Plot
 # Graph show relation between price and rating
-Books %>% filter(Price < 250) %>% ggplot(aes(x = Rating,y = Price)) + geom_point()
-ratingPrice_plot <- Books %>% filter(Price < 250) %>% ggplot(aes(x = Rating,y = Price)) + 
+Books %>% ggplot(aes(x = Rating,y = Price)) + geom_point()
+ratingPrice_plot <- Books %>% ggplot(aes(x = Rating,y = Price)) + 
                     geom_point(aes(color=Type)) + ggtitle("Relation Between Price and Rating")
 ratingPrice_plot
 ratingPrice_plot + geom_smooth()
 ratingPrice_plot + geom_smooth(method="lm") + theme_minimal() + 
                    theme(panel.grid = element_line(linetype = "dashed"))
 
-# 3: Box plot
+# 3: Box Plot
 # Graph show Rating of the book
 rating_plot <- Books %>% ggplot(aes(x = Number_Of_Pages)) + geom_boxplot() + 
                ggtitle("Rating of the book") + theme_light() 
