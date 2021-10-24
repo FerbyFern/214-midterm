@@ -34,8 +34,7 @@ Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickes
 cols_condense(Books)
 
 # Package forcats
-# as_factor()
-as.factor(Books$Price)
+
 
 # Package dplyr
 # select()
@@ -60,6 +59,8 @@ Books %>% group_by(Type)
 Books %>% group_by(Type) %>% tally(sort = TRUE)
 # group_size()
 group_size(Books)
+# as.factor()
+as.factor(Books$Price)
 
 # Package ggplot2
 # coord_flip()
