@@ -113,7 +113,7 @@ ratingPrice_plot + geom_smooth(method="lm") + theme_minimal() +
 # 3: Box Plot
 # Graph show Rating of the book
 rating_plot <- Books %>% ggplot(aes(x = Number_Of_Pages)) + geom_boxplot() + 
-               ggtitle("Rating of the book") + theme_light() 
+               ggtitle("Number of pages in the book") + theme_light() 
 rating_plot
 
 
