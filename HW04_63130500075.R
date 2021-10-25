@@ -128,7 +128,7 @@ ratingPrice_plot + geom_smooth(method="lm") + theme_minimal() +
                    theme(panel.grid = element_line(linetype = "dashed"))
 
 # 3: Box Plot
-# Graph show Rating of the book
-rating_plot <- Books %>% ggplot(aes(x = Number_Of_Pages)) + geom_boxplot() + 
+# Graph show Number of Pages in the Book.
+rating_plot <- Books %>% ggplot(aes(x = Number_Of_Pages)) + geom_boxplot(outlier.colour = "#d54700") + 
                ggtitle("Number of Pages in the Book") + theme_light() 
 rating_plot
