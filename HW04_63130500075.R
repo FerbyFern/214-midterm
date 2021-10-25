@@ -6,7 +6,7 @@ library(ggplot2)    # Plotting graph
 library(stringr)    # Changing of data format
 library(forcats)    # Provide a suite of tools that solve common
 library(DescTools)  # For better use in exploring data and more function
-library(scales)     #use find percent
+library(scales)     # use find percent
 
 # Dataset
 Books <- read_csv("https://raw.githubusercontent.com/sit-2021-int214/027-Quickest-Electric-Cars/main/assignment/Homework04/HW04_63130500087/data.csv")
@@ -94,18 +94,28 @@ Books %>% select(Rating,Book_title,Type) %>% filter(Rating > 4.50)
 ------------------------------------------------------------
 
 # Part 4
-# 1: Pie Chart
-# Graph show type of book
+# 1: Graph show type of book
+# Bar Chart
+ggplot(Books,aes(x = Type, fill = Type)) + geom_bar() + ggtitle("Type of Book")
+type_plot <- ggplot(Books,aes(x = Type, fill = Type)) + geom_bar() + ggtitle("Type of Book") + coord_flip() + 
+             xlab("Types") + ylab("Number of Books") + 
+             scale_fill_manual(values = c("#eeb189", "#f9acc0", 
+                                          "#d9debb", "#c4b3c3", "#86a5c4" ))
+type_plot
+  
+# Pie Chart
 group_type <- data.frame(table(Books$Type))
 group_type <- group_type %>% rename("Type" = Var1,"count" = Freq)
 
 group_type %>% ggplot(aes(x = "",y = count, fill = Type)) + 
-               geom_bar(stat ="identity", width = 1, color ="white") +
+               geom_bar(stat ="identity", width = 1, color = "white") +
                coord_polar("y", start = 0)+
                theme_void() +
                geom_text(aes(label = percent(count/sum(count))),
-               position = position_stack(vjust = 0.5)) + 
-               ggtitle("Type of Book")
+               position = position_stack(vjust = 0.5), size = 4, color = "black") + 
+               ggtitle("Type of Book") +
+               scale_fill_manual(values = c("#eeb189", "#f9acc0", 
+                                            "#d9debb", "#c4b3c3", "#86a5c4" ))
 
 # 2: Scatter Plot
 # Graph show relation between price and rating
