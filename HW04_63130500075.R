@@ -15,6 +15,15 @@ View(Books)
 # Explore dataset
 glimpse(Books)
 
+# Find the NA of each column.
+is.na(topbooks$Rating) %>% sum()
+is.na(topbooks$Reviews) %>% sum()
+is.na(topbooks$Book_title) %>% sum()
+is.na(topbooks$Description) %>% sum()
+is.na(topbooks$Number_Of_Pages) %>% sum()
+is.na(topbooks$Type) %>% sum()
+is.na(topbooks$Price) %>% sum()
+
 # Clean data column "Type" cleaned the word "Box set"
 Books$Type <- Books$Type %>% str_remove("Boxed Set -") %>% str_trim()
 View(Books)
